@@ -475,7 +475,8 @@ mod tests {
     use super::*;
     use crate::random;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_constants() {
         assert_eq!(BYTES, 32);
         assert_eq!(SCALARBYTES, 32);
@@ -488,7 +489,8 @@ mod tests {
         assert_eq!(uniformbytes(), 32);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_is_valid_point() {
         // Generate a random point
         let p = random();
@@ -501,7 +503,8 @@ mod tests {
         assert!(is_valid_point(&base_point).unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_add_sub() {
         // Generate two random points
         let p = random();
@@ -518,7 +521,8 @@ mod tests {
         assert!(is_valid_point(&s).unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_from_uniform() {
         // Generate a random uniform string
         let r = random::bytes(UNIFORMBYTES);
@@ -531,7 +535,8 @@ mod tests {
         assert!(is_valid_point(&p).unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_random() {
         // Generate a random point
         let p = random();
@@ -541,14 +546,16 @@ mod tests {
         assert!(is_valid_point(&p).unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalar_random() {
         // Generate a random scalar
         let s = scalar_random().unwrap();
         assert_eq!(s.len(), SCALARBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalar_invert() {
         // Generate a random scalar (non-zero)
         let mut s = scalar_random().unwrap();
@@ -569,7 +576,8 @@ mod tests {
         assert_eq!(check, s);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalar_negate() {
         // Generate a random scalar
         let s = scalar_random().unwrap();
@@ -589,7 +597,8 @@ mod tests {
         assert_ne!(zero_check, s);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalar_complement() {
         // Generate a random scalar
         let s = scalar_random().unwrap();
@@ -602,7 +611,8 @@ mod tests {
         assert_ne!(comp, s);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalar_add() {
         // Generate two random scalars
         let x = scalar_random().unwrap();
@@ -617,7 +627,8 @@ mod tests {
         assert_eq!(check, x);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalar_sub() {
         // Generate two random scalars
         let x = scalar_random().unwrap();
@@ -632,7 +643,8 @@ mod tests {
         assert_eq!(check, x);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalar_mul() {
         // Generate two random scalars
         let x = scalar_random().unwrap();
@@ -650,7 +662,8 @@ mod tests {
         assert_eq!(left, right);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalar_reduce() {
         // Generate a random non-reduced scalar
         let s = random::bytes(NONREDUCEDSCALARBYTES);

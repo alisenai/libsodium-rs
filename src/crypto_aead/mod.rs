@@ -407,7 +407,8 @@ mod tests {
     use crate::crypto_aead::chacha20poly1305_state;
     use crate::crypto_aead::xchacha20poly1305_state;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_xchacha20poly1305() {
         let key = xchacha20poly1305::Key::generate();
         let nonce = xchacha20poly1305::Nonce::from_bytes([0u8; xchacha20poly1305::NPUBBYTES]);
@@ -479,7 +480,8 @@ mod tests {
         // The test is complete
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_aes256gcm() {
         use crate::crypto_aead::aes256gcm;
 
@@ -512,7 +514,8 @@ mod tests {
         assert_eq!(message, &precomp_decrypted[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_aegis128l() {
         let key = aegis128l::Key::generate();
         let nonce = aegis128l::Nonce::from_bytes([0u8; aegis128l::NPUBBYTES]);
@@ -561,7 +564,8 @@ mod tests {
         assert!(aegis128l::messagebytes_max() > 0);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_chacha20poly1305_ietf() {
         let key = chacha20poly1305_ietf::Key::generate();
         let nonce =
@@ -633,7 +637,8 @@ mod tests {
         assert_eq!(message, &precomp_detached_decrypted[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_chacha20poly1305_original() {
         let key = chacha20poly1305::Key::generate();
         let nonce = chacha20poly1305::Nonce::from_bytes([0u8; chacha20poly1305::NPUBBYTES]);
@@ -702,7 +707,8 @@ mod tests {
         assert_eq!(message, &precomp_detached_decrypted[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_aegis256() {
         let key = aegis256::Key::generate();
         let nonce = aegis256::Nonce::from_bytes([0u8; aegis256::NPUBBYTES]);

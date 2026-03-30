@@ -811,7 +811,8 @@ pub unsafe fn mprotect_readwrite(ptr: *mut crate::ffi::c_void) -> i32 {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_memcmp() {
         let a = b"hello";
         let b = b"hello";
@@ -821,21 +822,24 @@ mod tests {
         assert!(!memcmp(a, c));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_memzero() {
         let mut buf = vec![1, 2, 3, 4, 5];
         memzero(&mut buf);
         assert_eq!(buf, vec![0, 0, 0, 0, 0]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_increment_be() {
         let mut n = vec![0, 0, 0, 255];
         increment_be(&mut n);
         assert_eq!(n, vec![1, 0, 0, 255]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hex_conversion() {
         let bin = vec![0xDE, 0xAD, 0xBE, 0xEF];
         let hex = bin2hex(&bin);
@@ -850,7 +854,8 @@ mod tests {
         assert_eq!(bin, bin3);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_base64() {
         let bin = [0xDE, 0xAD, 0xBE, 0xEF];
 
@@ -878,14 +883,16 @@ mod tests {
         assert!(len >= 14); // 10 bytes -> at least 14 base64 chars + null terminator
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_memory_locking() {
         let mut buf = vec![1, 2, 3, 4, 5];
         mlock(&mut buf).expect("Failed to lock memory");
         munlock(&mut buf).expect("Failed to unlock memory");
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secure_memory_allocation() {
         // Test secure memory allocation
         let ptr = malloc(100);

@@ -418,13 +418,15 @@ pub mod hmacsha512256;
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_generation() {
         let key = Key::generate().unwrap();
         assert_eq!(key.as_bytes().len(), KEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_from_slice() {
         let bytes = vec![0u8; KEYBYTES];
         let key = Key::from_slice(&bytes).unwrap();
@@ -434,7 +436,8 @@ mod tests {
         assert!(Key::from_slice(&[0u8; KEYBYTES + 1]).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_tag_from_slice() {
         let bytes = vec![0u8; BYTES];
         let tag = Tag::from_slice(&bytes).unwrap();
@@ -444,7 +447,8 @@ mod tests {
         assert!(Tag::from_slice(&[0u8; BYTES + 1]).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_auth_and_verify() {
         let key = Key::generate().unwrap();
         let message = b"test message";
@@ -463,7 +467,8 @@ mod tests {
         assert!(!verify(&tag, message, &wrong_key));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_as_ref() {
         let key = Key::generate().unwrap();
         let key_ref: &[u8] = key.as_ref();
@@ -471,7 +476,8 @@ mod tests {
         assert_eq!(key_ref, key.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_try_from_slice() {
         // Valid slice
         let bytes = vec![0x42; KEYBYTES];
@@ -487,14 +493,16 @@ mod tests {
         assert!(Key::try_from(long_bytes.as_slice()).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_from_bytes() {
         let bytes = [0x42; KEYBYTES];
         let key = Key::from(bytes);
         assert_eq!(key.as_bytes(), &bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_into_bytes() {
         let original_bytes = [0x42; KEYBYTES];
         let key = Key::from(original_bytes);
@@ -502,7 +510,8 @@ mod tests {
         assert_eq!(bytes, original_bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_tag_as_ref() {
         let key = Key::generate().unwrap();
         let message = b"test message";
@@ -512,7 +521,8 @@ mod tests {
         assert_eq!(tag_ref, tag.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_tag_try_from_slice() {
         // Valid slice
         let bytes = vec![0x42; BYTES];
@@ -528,14 +538,16 @@ mod tests {
         assert!(Tag::try_from(long_bytes.as_slice()).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_tag_from_bytes() {
         let bytes = [0x42; BYTES];
         let tag = Tag::from(bytes);
         assert_eq!(tag.as_bytes(), &bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_tag_into_bytes() {
         let original_bytes = [0x42; BYTES];
         let tag = Tag::from(original_bytes);
@@ -543,7 +555,8 @@ mod tests {
         assert_eq!(bytes, original_bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_tag_roundtrip() {
         // Test Key roundtrip
         let key_bytes = [0x42; KEYBYTES];

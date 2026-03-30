@@ -1029,14 +1029,16 @@ mod tests {
     use super::*;
     // Random is used in other test functions
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keypair_generation() {
         let keypair = KeyPair::generate().unwrap();
         assert_eq!(keypair.public_key.as_bytes().len(), PUBLICKEYBYTES);
         assert_eq!(keypair.secret_key.as_bytes().len(), SECRETKEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_seed_keypair() {
         let mut seed = [0u8; SEEDBYTES];
         crate::random::fill_bytes(&mut seed);
@@ -1054,7 +1056,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_encrypt_decrypt() {
         let alice = KeyPair::generate().unwrap();
         let bob = KeyPair::generate().unwrap();
@@ -1070,7 +1073,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_beforenm_afternm() {
         let alice = KeyPair::generate().unwrap();
         let bob = KeyPair::generate().unwrap();
@@ -1092,7 +1096,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nacl_compatibility() {
         let alice = KeyPair::generate().unwrap();
         let bob = KeyPair::generate().unwrap();
@@ -1119,7 +1124,8 @@ mod tests {
         assert_eq!(decrypted_padded, padded_message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nacl_compatibility_afternm() {
         let alice = KeyPair::generate().unwrap();
         let bob = KeyPair::generate().unwrap();
@@ -1147,7 +1153,8 @@ mod tests {
         assert_eq!(decrypted_padded, padded_message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nonce_traits() {
         // Test TryFrom<&[u8]>
         let bytes = [0x42; NONCEBYTES];
@@ -1173,7 +1180,8 @@ mod tests {
         assert_eq!(slice_ref.len(), NONCEBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_publickey_traits() {
         // Test TryFrom<&[u8]>
         let bytes = [0x42; PUBLICKEYBYTES];
@@ -1199,7 +1207,8 @@ mod tests {
         assert_eq!(slice_ref.len(), PUBLICKEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secretkey_traits() {
         // Test TryFrom<&[u8]>
         let bytes = [0x42; SECRETKEYBYTES];
@@ -1225,7 +1234,8 @@ mod tests {
         assert_eq!(slice_ref.len(), SECRETKEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_precomputedkey_traits() {
         // First, create a valid precomputed key
         let alice = KeyPair::generate().unwrap();

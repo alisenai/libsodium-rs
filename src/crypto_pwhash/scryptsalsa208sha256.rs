@@ -216,7 +216,8 @@ mod tests {
     use super::*;
     use crate::random;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_max_constants_match_libsodium() {
         assert_eq!(BYTES_MAX, unsafe {
             libsodium_sys::crypto_pwhash_scryptsalsa208sha256_bytes_max()
@@ -229,7 +230,8 @@ mod tests {
         });
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pwhash() {
         let password = b"test password";
         let mut salt = [0u8; SALTBYTES];
@@ -246,7 +248,8 @@ mod tests {
         assert_eq!(key.len(), 32);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pwhash_str() {
         let password = b"test password";
         let hash_str = pwhash_str(password, OPSLIMIT_INTERACTIVE, MEMLIMIT_INTERACTIVE).unwrap();
@@ -255,7 +258,8 @@ mod tests {
         assert!(!pwhash_str_verify(&hash_str, b"wrong password").unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pwhash_str_needs_rehash() {
         let password = b"test password";
         let hash_str = pwhash_str(password, OPSLIMIT_INTERACTIVE, MEMLIMIT_INTERACTIVE).unwrap();
@@ -272,7 +276,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pwhash_ll() {
         let password = b"test password";
         let salt = b"test salt";

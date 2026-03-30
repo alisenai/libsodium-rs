@@ -746,13 +746,15 @@ pub fn decrypt_detached(
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_generation() {
         let key = Key::generate();
         assert_eq!(key.as_bytes().len(), KEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_encrypt_decrypt() {
         let key = Key::generate();
         let nonce = Nonce::generate();
@@ -767,7 +769,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_encrypt_decrypt_detached() {
         let key = Key::generate();
         let nonce = Nonce::generate();
@@ -782,7 +785,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_decrypt_failure() {
         let key = Key::generate();
         let nonce = Nonce::generate();
@@ -800,7 +804,8 @@ mod tests {
         assert!(decrypt(&ciphertext, &nonce, &key).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nonce_trait_implementations() {
         // Test TryFrom<&[u8]>
         let nonce_bytes = [0x42; NONCEBYTES];
@@ -820,7 +825,8 @@ mod tests {
         assert_eq!(bytes, nonce_bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_trait_implementations() {
         // Test AsRef<[u8]>
         let key = Key::generate();

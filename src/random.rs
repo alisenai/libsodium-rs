@@ -84,7 +84,8 @@ pub fn uniform(upper_bound: u32) -> u32 {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_random_bytes() {
         let bytes1 = bytes(32);
         let bytes2 = bytes(32);
@@ -93,12 +94,14 @@ mod tests {
         assert_ne!(bytes1, bytes2); // Extremely unlikely to be equal
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_random_u32() {
         let _ = u32(); // Just ensure it doesn't panic
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_uniform() {
         let bound = 100;
         for _ in 0..1000 {

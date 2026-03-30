@@ -1522,7 +1522,8 @@ pub fn primitive() -> &'static str {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keypair_generation() {
         // Generate a new keypair
         let keypair = KeyPair::generate().unwrap();
@@ -1534,7 +1535,8 @@ mod tests {
         assert_eq!(sk.as_bytes().len(), SECRETKEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_sign_verify() {
         // Generate a new keypair
         let keypair = KeyPair::generate().unwrap();
@@ -1561,7 +1563,8 @@ mod tests {
         assert!(verify(&tampered, &pk).is_none());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_verify_detached() {
         // Generate a keypair
         let keypair = KeyPair::generate().unwrap();
@@ -1585,7 +1588,8 @@ mod tests {
         assert!(!verify_detached(&signature, message, &wrong_pk));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_seed_keypair() {
         // Generate a random seed
         let mut seed = [0u8; SEEDBYTES];
@@ -1616,7 +1620,8 @@ mod tests {
         assert_ne!(determ_sk.0, [0u8; SECRETKEYBYTES]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_conversions() {
         // Generate a keypair
         let keypair = KeyPair::generate().unwrap();
@@ -1642,7 +1647,8 @@ mod tests {
         assert_eq!(curve_sk.len(), 32);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_multipart_signing() {
         // Generate a keypair
         let keypair = KeyPair::generate().unwrap();
@@ -1679,7 +1685,8 @@ mod tests {
         assert!(!verify_state3.finalize_verify(&signature, &wrong_pk));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_publickey_traits() {
         let keypair = KeyPair::generate().unwrap();
         let pk = keypair.public_key;
@@ -1699,7 +1706,8 @@ mod tests {
         assert_eq!(extracted, bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secretkey_traits() {
         let keypair = KeyPair::generate().unwrap();
         let sk = keypair.secret_key;

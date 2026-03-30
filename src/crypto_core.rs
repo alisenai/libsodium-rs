@@ -2346,7 +2346,8 @@ mod tests {
     use super::*;
     use crate::random;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ed25519_constants() {
         assert_eq!(ed25519::BYTES, 32);
         assert_eq!(ed25519::SCALARBYTES, 32);
@@ -2354,7 +2355,8 @@ mod tests {
         assert_eq!(ed25519::UNIFORMBYTES, 32);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ed25519_validation() {
         // Test point validation
         let valid_point = [0u8; ed25519::BYTES];
@@ -2371,7 +2373,8 @@ mod tests {
         assert!(ed25519::is_valid_point(&random_point).unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ed25519_point_operations() {
         // Generate two random points
         let p = ed25519::random();
@@ -2394,7 +2397,8 @@ mod tests {
         assert!(ed25519::is_valid_point(&point).unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ed25519_scalar_operations() {
         // Generate random scalars
         let x = ed25519::scalar_random();
@@ -2434,7 +2438,8 @@ mod tests {
         assert_eq!(reduced.len(), ed25519::SCALARBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ed25519_scalar_arithmetic_properties() {
         // Generate random scalars
         let x = ed25519::scalar_random();
@@ -2476,7 +2481,8 @@ mod tests {
         assert_eq!(zero_times_y, y_times_zero);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ristretto255_operations() {
         // Test random point generation
         let point = ristretto255::random().unwrap();
@@ -2490,7 +2496,8 @@ mod tests {
         assert!(ristretto255::is_valid_point(&sum).unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ristretto255_scalar_operations() {
         // Test scalar random generation
         let scalar1 = ristretto255::scalar_random();
@@ -2530,7 +2537,8 @@ mod tests {
         assert_eq!(reduced.len(), ristretto255::SCALARBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ristretto255_scalar_arithmetic_properties() {
         // Generate random scalars
         let x = ristretto255::scalar_random();
@@ -2571,7 +2579,8 @@ mod tests {
         assert_eq!(zero_times_y, y_times_zero);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ristretto255_scalar_inversion() {
         // Generate a non-zero scalar
         let mut scalar = ristretto255::scalar_random();
@@ -2595,7 +2604,8 @@ mod tests {
         assert!(ristretto255::scalar_invert(&zero).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hchacha20() {
         let input = [0u8; hchacha20::INPUTBYTES];
         let key = [0u8; hchacha20::KEYBYTES];
@@ -2612,7 +2622,8 @@ mod tests {
         assert!(hchacha20::hchacha20(&input, &[0u8; 1], None).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hsalsa20() {
         let input = [0u8; hsalsa20::INPUTBYTES];
         let key = [0u8; hsalsa20::KEYBYTES];
@@ -2629,7 +2640,8 @@ mod tests {
         assert!(hsalsa20::hsalsa20(&input, &[0u8; 1], None).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_salsa20() {
         let input = [0u8; salsa20::INPUTBYTES];
         let key = [0u8; salsa20::KEYBYTES];
@@ -2646,7 +2658,8 @@ mod tests {
         assert!(salsa20::salsa20(&input, &[0u8; 1], None).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_salsa2012() {
         let input = [0u8; salsa2012::INPUTBYTES];
         let key = [0u8; salsa2012::KEYBYTES];
@@ -2663,7 +2676,8 @@ mod tests {
         assert!(salsa2012::salsa2012(&input, &[0u8; 1], None).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_salsa208() {
         let input = [0u8; salsa208::INPUTBYTES];
         let key = [0u8; salsa208::KEYBYTES];
@@ -2680,20 +2694,23 @@ mod tests {
         assert!(salsa208::salsa208(&input, &[0u8; 1], None).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_constants() {
         assert_eq!(keccak1600::STATEBYTES, 224);
         assert_eq!(keccak1600::statebytes(), 224);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_init() {
         let state = keccak1600::State::new();
         // Just verify it doesn't panic
         let _ = state;
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_xor_and_extract() {
         let mut state = keccak1600::State::new();
 
@@ -2709,7 +2726,8 @@ mod tests {
         assert_eq!(&output[..], &input[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_permute_24() {
         let mut state = keccak1600::State::new();
 
@@ -2732,7 +2750,8 @@ mod tests {
         assert_ne!(&before[..], &after[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_permute_12() {
         let mut state = keccak1600::State::new();
 
@@ -2755,7 +2774,8 @@ mod tests {
         assert_ne!(&before[..], &after[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_permute_24_vs_12() {
         // 24 rounds and 12 rounds should produce different results
         let mut state24 = keccak1600::State::new();
@@ -2776,7 +2796,8 @@ mod tests {
         assert_ne!(&out24[..], &out12[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_clone() {
         let mut state1 = keccak1600::State::new();
         let input = [0x42u8; 100];
@@ -2793,7 +2814,8 @@ mod tests {
         assert_eq!(&out1[..], &out2[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_reinit() {
         let mut state = keccak1600::State::new();
 
@@ -2811,7 +2833,8 @@ mod tests {
         assert!(output.iter().all(|&b| b == 0));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keccak1600_offset() {
         let mut state = keccak1600::State::new();
 
@@ -2832,7 +2855,8 @@ mod tests {
         assert_eq!(out[0], 0x03);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     #[should_panic(expected = "offset + length must be <= 200")]
     fn test_keccak1600_xor_overflow() {
         let mut state = keccak1600::State::new();
@@ -2840,7 +2864,8 @@ mod tests {
         state.xor_bytes(&data, 195); // 195 + 10 > 200
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     #[should_panic(expected = "offset + length must be <= 200")]
     fn test_keccak1600_extract_overflow() {
         let state = keccak1600::State::new();

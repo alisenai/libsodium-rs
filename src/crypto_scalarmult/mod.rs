@@ -142,7 +142,8 @@ pub fn scalarmult(secret_key: &[u8], public_key: &[u8]) -> Result<[u8; BYTES]> {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalarmult() {
         // Create a valid secret key (not all zeros)
         let mut secret_key = vec![0u8; SCALARBYTES];
@@ -156,7 +157,8 @@ mod tests {
         assert_eq!(shared_secret.len(), BYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_curve25519() {
         // Create a valid secret key (not all zeros)
         let mut secret_key = vec![0u8; curve25519::SCALARBYTES];
@@ -170,7 +172,8 @@ mod tests {
         assert_eq!(shared_secret.len(), curve25519::BYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ed25519() {
         // Skip this test if the operation fails
         // Ed25519 requires specially formatted keys for scalar multiplication
@@ -199,7 +202,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ristretto255() {
         // Skip this test if the operation fails
         // Ristretto255 requires specially formatted keys for scalar multiplication

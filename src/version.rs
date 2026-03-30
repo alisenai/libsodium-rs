@@ -118,14 +118,16 @@ pub fn library_minimal() -> bool {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_version_string() {
         let version = version_string();
         assert!(!version.is_empty());
         println!("libsodium version: {version}");
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_version_numbers() {
         let major = library_version_major();
         let minor = library_version_minor();
@@ -134,7 +136,8 @@ mod tests {
         println!("libsodium version: {major}.{minor}");
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_library_minimal() {
         let is_minimal = library_minimal();
         println!("Is minimal implementation: {is_minimal}");

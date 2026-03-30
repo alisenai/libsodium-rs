@@ -89,7 +89,8 @@ pub fn verify_64(x: &[u8], y: &[u8]) -> bool {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_verify_16() {
         let x = [0u8; 16];
         let y = [0u8; 16];
@@ -104,7 +105,8 @@ mod tests {
         assert!(!verify_16(&[0u8; 15], &x));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_verify_32() {
         let x = [0u8; 32];
         let y = [0u8; 32];
@@ -119,7 +121,8 @@ mod tests {
         assert!(!verify_32(&[0u8; 31], &x));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_verify_64() {
         let x = [0u8; 64];
         let y = [0u8; 64];

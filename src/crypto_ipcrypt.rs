@@ -918,7 +918,8 @@ mod tests {
         bytes_to_ipv4, decrypt, encrypt, ipv4_to_bytes, nd, ndx, pfx, Key, BYTES, KEYBYTES,
     };
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ipv4_conversion() {
         let ipv4 = [192, 0, 2, 1];
         let bytes = ipv4_to_bytes(ipv4);
@@ -934,7 +935,8 @@ mod tests {
         assert_eq!(recovered, ipv4);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_deterministic_encryption() {
         let key = Key::generate();
         let ip = ipv4_to_bytes([192, 0, 2, 1]);
@@ -946,7 +948,8 @@ mod tests {
         assert_ne!(ip, encrypted);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_deterministic_same_input_same_output() {
         let key = Key::generate();
         let ip = ipv4_to_bytes([10, 0, 0, 1]);
@@ -957,7 +960,8 @@ mod tests {
         assert_eq!(encrypted1, encrypted2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nd_encryption() {
         let key = Key::generate();
         let ip = ipv4_to_bytes([192, 168, 1, 1]);
@@ -970,7 +974,8 @@ mod tests {
         assert_eq!(encrypted.len(), nd::OUTPUTBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nd_different_tweaks() {
         let key = Key::generate();
         let ip = ipv4_to_bytes([192, 168, 1, 1]);
@@ -992,7 +997,8 @@ mod tests {
         assert_eq!(decrypted2, ip);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ndx_encryption() {
         let key = ndx::Key::generate();
         let ip = ipv4_to_bytes([172, 16, 0, 1]);
@@ -1005,7 +1011,8 @@ mod tests {
         assert_eq!(encrypted.len(), ndx::OUTPUTBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ndx_different_tweaks() {
         let key = ndx::Key::generate();
         let ip = ipv4_to_bytes([172, 16, 0, 1]);
@@ -1022,7 +1029,8 @@ mod tests {
         assert_eq!(ndx::decrypt(&encrypted2, &key), ip);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pfx_encryption() {
         let key = pfx::Key::generate();
         let ip = ipv4_to_bytes([10, 0, 0, 1]);
@@ -1034,7 +1042,8 @@ mod tests {
         assert_eq!(encrypted.len(), pfx::BYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pfx_preserves_relationship() {
         let key = pfx::Key::generate();
 
@@ -1055,7 +1064,8 @@ mod tests {
         assert_ne!(enc1, enc2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_different_keys_different_results() {
         let key1 = Key::generate();
         let key2 = Key::generate();
@@ -1067,28 +1077,32 @@ mod tests {
         assert_ne!(encrypted1, encrypted2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_from_slice() {
         let bytes = [0x42u8; KEYBYTES];
         let key = Key::from_slice(&bytes);
         assert_eq!(key.as_bytes(), &bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ndx_key_from_slice() {
         let bytes = [0x42u8; ndx::KEYBYTES];
         let key = ndx::Key::from_slice(&bytes);
         assert_eq!(key.as_bytes(), &bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pfx_key_from_slice() {
         let bytes = [0x42u8; pfx::KEYBYTES];
         let key = pfx::Key::from_slice(&bytes);
         assert_eq!(key.as_bytes(), &bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ipv6_encryption() {
         let key = Key::generate();
 
@@ -1107,7 +1121,8 @@ mod tests {
         assert!(bytes_to_ipv4(&ip).is_none());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_constants() {
         assert_eq!(BYTES, 16);
         assert_eq!(KEYBYTES, 16);
@@ -1126,7 +1141,8 @@ mod tests {
         assert_eq!(pfx::BYTES, 16);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_parse_ip_ipv4() {
         use super::{format_ip, parse_ip};
 
@@ -1140,7 +1156,8 @@ mod tests {
         assert_eq!(format_ip(&bin), "255.255.255.255");
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_parse_ip_ipv6() {
         use super::{format_ip, parse_ip};
 
@@ -1160,7 +1177,8 @@ mod tests {
         assert!(formatted.contains("2001:"));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_parse_ip_invalid() {
         use super::parse_ip;
 
@@ -1169,7 +1187,8 @@ mod tests {
         assert!(parse_ip("").is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_encrypt_str_deterministic() {
         use super::{decrypt_str, encrypt_str, Key};
 
@@ -1186,7 +1205,8 @@ mod tests {
         assert_eq!(decrypted, "2001:db8::1");
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nd_encrypt_str() {
         let key = Key::generate();
 
@@ -1202,7 +1222,8 @@ mod tests {
         assert_eq!(decrypted, "2001:db8::1");
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nd_hex_encoding() {
         let key = Key::generate();
         let ip = ipv4_to_bytes([192, 0, 2, 1]);
@@ -1216,7 +1237,8 @@ mod tests {
         assert_eq!(encrypted, decoded);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ndx_encrypt_str() {
         let key = ndx::Key::generate();
 
@@ -1232,7 +1254,8 @@ mod tests {
         assert_eq!(decrypted, "2001:db8::1");
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_ndx_hex_encoding() {
         let key = ndx::Key::generate();
         let ip = ipv4_to_bytes([192, 0, 2, 1]);
@@ -1246,7 +1269,8 @@ mod tests {
         assert_eq!(encrypted, decoded);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pfx_encrypt_str() {
         let key = pfx::Key::generate();
 
@@ -1260,7 +1284,8 @@ mod tests {
         assert_eq!(decrypted, "2001:db8::1");
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_format_ip_consistency_with_manual_conversion() {
         use super::{bytes_to_ipv4, format_ip, ipv4_to_bytes, parse_ip};
 

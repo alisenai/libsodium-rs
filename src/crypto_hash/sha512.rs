@@ -247,7 +247,8 @@ mod tests {
     use super::*;
     use ct_codecs::{Encoder, Hex};
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hash() {
         let data = b"test data";
         let hash = hash(data);
@@ -263,7 +264,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_incremental_hash() {
         let mut state = State::new();
         state.update(b"test ");
@@ -285,7 +287,8 @@ mod tests {
         assert_eq!(result, one_shot_hash);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_statebytes() {
         assert_eq!(
             statebytes(),
@@ -293,7 +296,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_bytes() {
         assert_eq!(bytes(), BYTES);
     }

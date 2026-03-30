@@ -486,7 +486,8 @@ impl From<Tag> for [u8; BYTES] {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_onetimeauth() {
         // Generate a random key
         let key = Key::generate();
@@ -508,7 +509,8 @@ mod tests {
         assert!(!verify(&tag, message, &wrong_key));
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_onetimeauth_incremental() {
         // Generate a random key
         let key = Key::generate();
@@ -529,7 +531,8 @@ mod tests {
         assert_eq!(expected_tag.as_bytes(), incremental_tag.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_trait_implementations() {
         // Test From<[u8; KEYBYTES]> for Key
         let key_bytes = [42u8; KEYBYTES];
@@ -546,7 +549,8 @@ mod tests {
         assert_eq!(key_ref.len(), KEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_tag_trait_implementations() {
         // Test From<[u8; BYTES]> for Tag
         let tag_bytes = [99u8; BYTES];
@@ -563,7 +567,8 @@ mod tests {
         assert_eq!(tag_ref.len(), BYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_tag_conversions_with_real_crypto() {
         // Generate a real key and test conversions
         let key = Key::generate();

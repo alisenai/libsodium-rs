@@ -383,7 +383,8 @@ pub fn scalarmult_base_noclamp(secret_key: &[u8]) -> Result<[u8; BYTES]> {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalarmult() {
         // Skip this test if the operation fails
         // Ed25519 requires specially formatted keys for scalar multiplication
@@ -412,7 +413,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalarmult_noclamp() {
         // Skip this test if the operation fails
         // Ed25519 requires specially formatted keys for scalar multiplication
@@ -441,7 +443,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalarmult_base() {
         // Skip this test if the operation fails
         // For testing purposes, we'll just check that the function doesn't panic
@@ -465,7 +468,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalarmult_base_noclamp() {
         // Skip this test if the operation fails
         // For testing purposes, we'll just check that the function doesn't panic

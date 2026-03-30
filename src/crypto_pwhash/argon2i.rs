@@ -3,10 +3,11 @@ use crate::{Result, SodiumError};
 pub const ALG: i32 = libsodium_sys::crypto_pwhash_argon2i_ALG_ARGON2I13 as i32;
 
 pub const BYTES_MIN: usize = libsodium_sys::crypto_pwhash_argon2i_BYTES_MIN as usize;
-#[cfg(target_pointer_width = "64")]
-pub const BYTES_MAX: usize = 0x001f_ffff_ffe0;
-#[cfg(target_pointer_width = "32")]
-pub const BYTES_MAX: usize = usize::MAX;
+pub const BYTES_MAX: usize = if usize::BITS >= 32 {
+    u32::MAX as usize
+} else {
+    usize::MAX
+};
 pub const PASSWD_MIN: usize = libsodium_sys::crypto_pwhash_argon2i_PASSWD_MIN as usize;
 pub const PASSWD_MAX: usize = libsodium_sys::crypto_pwhash_argon2i_PASSWD_MAX as usize;
 pub const SALTBYTES: usize = libsodium_sys::crypto_pwhash_argon2i_SALTBYTES as usize;
@@ -15,10 +16,13 @@ pub const STRBYTES: usize = libsodium_sys::crypto_pwhash_argon2i_STRBYTES as usi
 pub const OPSLIMIT_MIN: u64 = libsodium_sys::crypto_pwhash_argon2i_OPSLIMIT_MIN as u64;
 pub const OPSLIMIT_MAX: u64 = libsodium_sys::crypto_pwhash_argon2i_OPSLIMIT_MAX as u64;
 pub const MEMLIMIT_MIN: usize = libsodium_sys::crypto_pwhash_argon2i_MEMLIMIT_MIN as usize;
-#[cfg(target_pointer_width = "64")]
-pub const MEMLIMIT_MAX: usize = 4_398_046_510_080;
-#[cfg(target_pointer_width = "32")]
-pub const MEMLIMIT_MAX: usize = usize::MAX;
+pub const MEMLIMIT_MAX: usize = if usize::BITS >= 64 {
+    4_398_046_510_080u64 as usize
+} else if usize::BITS >= 32 {
+    2_147_483_648
+} else {
+    32_768
+};
 
 pub const OPSLIMIT_INTERACTIVE: u64 =
     libsodium_sys::crypto_pwhash_argon2i_OPSLIMIT_INTERACTIVE as u64;
@@ -178,7 +182,8 @@ mod tests {
     use super::*;
     use crate::random;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_max_constants_match_libsodium() {
         assert_eq!(BYTES_MAX, unsafe {
             libsodium_sys::crypto_pwhash_argon2i_bytes_max()
@@ -191,7 +196,8 @@ mod tests {
         });
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pwhash() {
         let password = b"test password";
         let mut salt = [0u8; SALTBYTES];
@@ -208,7 +214,8 @@ mod tests {
         assert_eq!(key.len(), 32);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pwhash_str() {
         let password = b"test password";
         let hash_str = pwhash_str(password, OPSLIMIT_INTERACTIVE, MEMLIMIT_INTERACTIVE).unwrap();
@@ -217,7 +224,8 @@ mod tests {
         assert!(!pwhash_str_verify(&hash_str, b"wrong password").unwrap());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_pwhash_str_needs_rehash() {
         let password = b"test password";
         let hash_str = pwhash_str(password, OPSLIMIT_INTERACTIVE, MEMLIMIT_INTERACTIVE).unwrap();

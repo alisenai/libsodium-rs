@@ -217,7 +217,8 @@ pub fn scalarmult_base(secret_key: &[u8]) -> Result<[u8; BYTES]> {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalarmult() {
         // For testing purposes, we'll just check that the function doesn't panic
         let mut secret_key = vec![0u8; SCALARBYTES];
@@ -246,7 +247,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_scalarmult_base() {
         // For testing purposes, we'll just check that the function doesn't panic
         let mut secret_key = vec![0u8; SCALARBYTES];

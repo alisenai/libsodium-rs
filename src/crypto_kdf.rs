@@ -1396,7 +1396,8 @@ pub mod hkdf {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_kdf() {
         let master_key = Key::generate().unwrap();
         let context = b"Examples";
@@ -1417,7 +1418,8 @@ mod tests {
         assert!(invalid_context_result.is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_blake2b() {
         let master_key = blake2b::Key::generate().unwrap();
         let context = b"Examples";
@@ -1429,7 +1431,8 @@ mod tests {
         assert_ne!(subkey, subkey2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hkdf_sha256() {
         // Test the extract function
         let ikm = b"input key material";
@@ -1453,7 +1456,8 @@ mod tests {
         assert_eq!(random_prk.as_bytes().len(), hkdf::sha256::KEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hkdf_sha512() {
         // Test the extract function
         let ikm = b"input key material";
@@ -1477,7 +1481,8 @@ mod tests {
         assert_eq!(random_prk.as_bytes().len(), hkdf::sha512::KEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hkdf_sha256_state() {
         // Test the incremental extraction API
         let ikm1 = b"input key";
@@ -1501,7 +1506,8 @@ mod tests {
         assert_eq!(prk1.as_bytes(), prk2.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hkdf_sha512_state() {
         // Test the incremental extraction API
         let ikm1 = b"input key";
@@ -1525,7 +1531,8 @@ mod tests {
         assert_eq!(prk1.as_bytes(), prk2.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_main_key_traits() {
         // Test AsRef
         let key = Key::generate().unwrap();
@@ -1551,7 +1558,8 @@ mod tests {
         assert_eq!(bytes_from_key, bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_blake2b_key_traits() {
         // Test AsRef
         let key = blake2b::Key::generate().unwrap();
@@ -1577,7 +1585,8 @@ mod tests {
         assert_eq!(bytes_from_key, bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hkdf_sha256_prk_traits() {
         // Test AsRef
         let prk = hkdf::sha256::keygen();
@@ -1603,7 +1612,8 @@ mod tests {
         assert_eq!(bytes_from_prk, bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hkdf_sha512_prk_traits() {
         // Test AsRef
         let prk = hkdf::sha512::keygen();

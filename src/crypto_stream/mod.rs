@@ -202,7 +202,8 @@ impl From<Key> for [u8; KEYBYTES] {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_generation() {
         // Generate a random key
         let key = Key::generate().unwrap();
@@ -216,7 +217,8 @@ mod tests {
         assert_eq!(key2.as_bytes(), key_bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_traits() {
         // Test TryFrom<&[u8]>
         let bytes = [0x42; KEYBYTES];
@@ -242,7 +244,8 @@ mod tests {
         assert_eq!(slice_ref.len(), KEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_chacha20() {
         // Generate a random key and nonce
         let key = Key::generate().unwrap();
@@ -267,7 +270,8 @@ mod tests {
         assert_eq!(&decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_xchacha20() {
         // Generate a random key and nonce
         let key = Key::generate().unwrap();
@@ -292,7 +296,8 @@ mod tests {
         assert_eq!(&decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_salsa20() {
         // Generate a random key and nonce
         let key = Key::generate().unwrap();
@@ -317,7 +322,8 @@ mod tests {
         assert_eq!(&decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_invalid_nonce_length() {
         // Generate a random key (unused but kept for documentation purposes)
         let _key = Key::generate().unwrap();

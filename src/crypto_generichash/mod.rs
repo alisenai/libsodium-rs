@@ -415,7 +415,8 @@ mod tests {
     use super::*;
     use ct_codecs::{Encoder, Hex};
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_generichash() {
         let data = b"test data";
         let hash = generichash(data, None, BYTES).unwrap();
@@ -429,7 +430,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_generichash_with_key() {
         let data = b"test data";
         let key = vec![0u8; KEYBYTES]; // Use a properly sized key
@@ -444,7 +446,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_generichash_incremental() {
         let mut state = State::new(None, BYTES).expect("Failed to create BLAKE2b state");
         state.update(b"test ");
@@ -458,14 +461,16 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_invalid_output_length() {
         // Should return an error for invalid output length
         assert!(generichash(b"test", None, BYTES_MAX + 1).is_err());
         assert!(generichash(b"test", None, BYTES_MIN - 1).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_invalid_key_length() {
         let long_key = vec![0u8; KEYBYTES_MAX + 1];
         // Should return an error for invalid key length

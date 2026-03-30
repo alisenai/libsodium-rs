@@ -1189,7 +1189,8 @@ mod tests {
     use super::*;
     use crate::ensure_init;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nonce_traits() {
         ensure_init().expect("Failed to initialize libsodium");
 
@@ -1217,7 +1218,8 @@ mod tests {
         assert_eq!(slice_ref.len(), NPUBBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_traits() {
         ensure_init().expect("Failed to initialize libsodium");
 
@@ -1245,7 +1247,8 @@ mod tests {
         assert_eq!(slice_ref.len(), KEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_encrypt_decrypt() {
         ensure_init().expect("Failed to initialize libsodium");
 

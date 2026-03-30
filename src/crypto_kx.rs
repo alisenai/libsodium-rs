@@ -699,7 +699,8 @@ pub fn server_session_keys(
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keypair_generation() {
         let keypair = KeyPair::generate().unwrap();
         let pk = keypair.public_key;
@@ -708,7 +709,8 @@ mod tests {
         assert_eq!(sk.as_bytes().len(), SECRETKEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_exchange() {
         // Generate keypairs for client and server
         let client_keypair = KeyPair::generate().unwrap();
@@ -727,7 +729,8 @@ mod tests {
         assert_eq!(client_keys.rx, server_keys.tx);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_public_key_asref() {
         let keypair = KeyPair::generate().unwrap();
         let public_key = keypair.public_key;
@@ -736,7 +739,8 @@ mod tests {
         assert_eq!(bytes_ref, public_key.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_public_key_try_from_slice() {
         // Valid case
         let bytes = [42u8; PUBLICKEYBYTES];
@@ -751,14 +755,16 @@ mod tests {
         assert!(PublicKey::try_from(&long_bytes[..]).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_public_key_from_bytes() {
         let bytes = [42u8; PUBLICKEYBYTES];
         let public_key = PublicKey::from(bytes);
         assert_eq!(public_key.as_bytes(), &bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_public_key_into_bytes() {
         let bytes = [42u8; PUBLICKEYBYTES];
         let public_key = PublicKey::from(bytes);
@@ -766,7 +772,8 @@ mod tests {
         assert_eq!(array, bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secret_key_asref() {
         let keypair = KeyPair::generate().unwrap();
         let secret_key = keypair.secret_key;
@@ -775,7 +782,8 @@ mod tests {
         assert_eq!(bytes_ref, secret_key.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secret_key_try_from_slice() {
         // Valid case
         let bytes = [42u8; SECRETKEYBYTES];
@@ -790,14 +798,16 @@ mod tests {
         assert!(SecretKey::try_from(&long_bytes[..]).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secret_key_from_bytes() {
         let bytes = [42u8; SECRETKEYBYTES];
         let secret_key = SecretKey::from(bytes);
         assert_eq!(secret_key.as_bytes(), &bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secret_key_into_bytes() {
         let bytes = [42u8; SECRETKEYBYTES];
         let secret_key = SecretKey::from(bytes);
@@ -805,7 +815,8 @@ mod tests {
         assert_eq!(array, bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secret_key_zeroization() {
         let bytes = [42u8; SECRETKEYBYTES];
         let secret_key = SecretKey::from(bytes);
@@ -819,7 +830,8 @@ mod tests {
         // ZeroizeOnDrop trait ensures it happens)
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_roundtrip_conversions() {
         // Test PublicKey roundtrip
         let keypair = KeyPair::generate().unwrap();

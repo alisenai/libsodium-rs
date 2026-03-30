@@ -183,7 +183,8 @@ mod tests {
     use super::*;
     use ct_codecs::{Encoder, Hex};
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hash() {
         let data = b"test data";
         let hash = hash(data);
@@ -199,7 +200,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hash_sha256() {
         let data = b"test data";
         let hash = hash_sha256(data);
@@ -215,7 +217,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_hash_sha512() {
         let data = b"test data";
         let hash = hash_sha512(data);

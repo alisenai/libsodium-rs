@@ -888,7 +888,8 @@ impl PullState {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secretstream() {
         let key = Key::generate();
         let message1 = b"Hello, ";
@@ -923,7 +924,8 @@ mod tests {
         assert_eq!(tag3, TAG_FINAL);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secretstream_rekey() {
         let key = Key::generate();
         let message1 = b"Message before rekey";
@@ -958,7 +960,8 @@ mod tests {
         assert_eq!(&decrypted2, message2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secretstream_tag_push() {
         let key = Key::generate();
         let message = b"Message with key material";
@@ -980,7 +983,8 @@ mod tests {
         assert_eq!(tag, TAG_PUSH);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_traits() {
         // Test TryFrom<&[u8]>
         let bytes = [0x42; KEYBYTES];

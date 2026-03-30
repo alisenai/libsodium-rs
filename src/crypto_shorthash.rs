@@ -369,7 +369,8 @@ mod tests {
     use super::*;
     // No need for ct-codecs in these tests
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_shorthash() {
         let key = Key::generate();
         let data = b"test data";
@@ -392,7 +393,8 @@ mod tests {
         assert_ne!(hash, hash4);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_siphash24() {
         let key = siphash24::Key::generate();
         let data = b"test data";
@@ -405,7 +407,8 @@ mod tests {
         assert_eq!(hash, hash2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_siphashx24() {
         let key = siphashx24::Key::generate();
         let data = b"test data";
@@ -418,7 +421,8 @@ mod tests {
         assert_eq!(hash, hash2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_traits() {
         // Test for the main Key type
         let key_bytes = [0u8; KEYBYTES];
@@ -445,7 +449,8 @@ mod tests {
         assert!(Key::try_from(long_slice.as_slice()).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_siphash24_key_traits() {
         // Test for siphash24::Key type
         let key_bytes = [0u8; siphash24::KEYBYTES];
@@ -472,7 +477,8 @@ mod tests {
         assert!(siphash24::Key::try_from(long_slice.as_slice()).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_siphashx24_key_traits() {
         // Test for siphashx24::Key type
         let key_bytes = [0u8; siphashx24::KEYBYTES];
@@ -499,7 +505,8 @@ mod tests {
         assert!(siphashx24::Key::try_from(long_slice.as_slice()).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_conversion_roundtrip() {
         // Test round-trip conversions for main Key
         let original_key = Key::generate();
@@ -512,7 +519,8 @@ mod tests {
         assert_eq!(original_key, key_via_try);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_siphash24_key_conversion_roundtrip() {
         // Test round-trip conversions for siphash24::Key
         let original_key = siphash24::Key::generate();
@@ -525,7 +533,8 @@ mod tests {
         assert_eq!(original_key, key_via_try);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_siphashx24_key_conversion_roundtrip() {
         // Test round-trip conversions for siphashx24::Key
         let original_key = siphashx24::Key::generate();
@@ -538,7 +547,8 @@ mod tests {
         assert_eq!(original_key, key_via_try);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_as_ref_consistency() {
         // Ensure AsRef and as_bytes return the same data
         let key = Key::generate();
@@ -551,7 +561,8 @@ mod tests {
         assert_eq!(keyx24.as_ref(), keyx24.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_try_from_error_messages() {
         // Test that TryFrom produces appropriate error messages
         let short_slice = vec![0u8; 5];

@@ -212,7 +212,8 @@ mod tests {
     use super::*;
     use ct_codecs::{Decoder, Encoder, Hex};
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_auth() {
         let key = Key::generate();
         let message = b"Hello, World!";
@@ -232,7 +233,8 @@ mod tests {
         assert!(verify(&mac, message, &wrong_key).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_auth_incremental() {
         let key = Key::generate();
         let message1 = b"Hello, ";
@@ -251,7 +253,8 @@ mod tests {
         assert_eq!(expected_mac, incremental_mac);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_known_vector() {
         // Test vector from RFC 4231 (Test Case 1)
         let mut key_bytes = vec![0u8; 20]; // 20 bytes for the hex string "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
@@ -275,7 +278,8 @@ mod tests {
         assert_eq!(std::str::from_utf8(encoded).unwrap(), expected);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_asref() {
         let key = Key::generate();
         let bytes: &[u8] = key.as_ref();
@@ -283,7 +287,8 @@ mod tests {
         assert_eq!(bytes, key.as_bytes());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_try_from_slice() {
         use std::convert::TryFrom;
 
@@ -301,14 +306,16 @@ mod tests {
         assert!(Key::try_from(&long_bytes[..]).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_from_bytes() {
         let bytes = [42u8; KEYBYTES];
         let key = Key::from(bytes);
         assert_eq!(key.as_bytes(), &bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_into_bytes() {
         let original_bytes = [42u8; KEYBYTES];
         let key = Key::from(original_bytes);
@@ -316,7 +323,8 @@ mod tests {
         assert_eq!(bytes, original_bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_roundtrip() {
         // Test roundtrip conversion from array to Key and back
         let original = [99u8; KEYBYTES];

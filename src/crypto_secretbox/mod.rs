@@ -583,13 +583,15 @@ pub mod xchacha20poly1305;
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_generation() {
         let key = Key::generate();
         assert_eq!(key.as_bytes().len(), KEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_encryption_decryption() {
         let key = Key::generate();
         let message = b"Hello, World!";
@@ -601,7 +603,8 @@ mod tests {
         assert_eq!(message, &decrypted[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_decryption_failure() {
         let key = Key::generate();
         let wrong_key = Key::generate();
@@ -612,7 +615,8 @@ mod tests {
         assert!(open(&ciphertext, nonce, &wrong_key).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nonce_traits() {
         // Test TryFrom<&[u8]>
         let bytes = [0x42; NONCEBYTES];
@@ -638,7 +642,8 @@ mod tests {
         assert_eq!(slice_ref.len(), NONCEBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_key_traits() {
         // Test TryFrom<&[u8]>
         let bytes = [0x42; KEYBYTES];

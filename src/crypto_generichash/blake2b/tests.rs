@@ -5,6 +5,7 @@ use crate::crypto_generichash::blake2b::{
 };
 use ct_codecs::{Encoder, Hex};
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 fn test_hash() {
     let data = b"test data";
@@ -21,6 +22,7 @@ fn test_hash() {
     );
 }
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 fn test_hash_with_key() {
     let data = b"test data";
@@ -38,6 +40,7 @@ fn test_hash_with_key() {
     );
 }
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 fn test_hash_with_salt_and_personal() {
     let data = b"test data";
@@ -53,6 +56,7 @@ fn test_hash_with_salt_and_personal() {
     assert_ne!(result, result2);
 }
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 fn test_incremental_hash() {
     let mut state = State::new(None, BYTES).expect("Failed to create BLAKE2b state");
@@ -75,18 +79,21 @@ fn test_incremental_hash() {
     assert_eq!(result, one_shot_hash);
 }
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 #[should_panic(expected = "Invalid parameters for BLAKE2b hash")]
 fn test_invalid_output_length_max() {
     hash(b"test", BYTES_MAX + 1);
 }
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 #[should_panic(expected = "Invalid parameters for BLAKE2b hash")]
 fn test_invalid_output_length_min() {
     hash(b"test", BYTES_MIN - 1);
 }
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 #[should_panic(expected = "Invalid parameters for BLAKE2b hash")]
 fn test_invalid_key_length() {
@@ -94,6 +101,7 @@ fn test_invalid_key_length() {
     hash_with_key(b"test", &long_key, BYTES);
 }
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 #[should_panic(expected = "Salt length must be exactly 16 bytes")]
 fn test_invalid_salt_length() {
@@ -111,6 +119,7 @@ fn test_invalid_salt_length() {
     .expect("Should have failed");
 }
 
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
 #[test]
 #[should_panic(expected = "Personalization length must be exactly 16 bytes")]
 fn test_invalid_personal_length() {

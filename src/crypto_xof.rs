@@ -926,7 +926,8 @@ pub mod turboshake256 {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_shake128_constants() {
         assert_eq!(shake128::BLOCKBYTES, 168);
         assert_eq!(shake128::STATEBYTES, 256);
@@ -937,7 +938,8 @@ mod tests {
         assert_eq!(shake128::domain_standard(), 0x1F);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_shake256_constants() {
         assert_eq!(shake256::BLOCKBYTES, 136);
         assert_eq!(shake256::STATEBYTES, 256);
@@ -948,7 +950,8 @@ mod tests {
         assert_eq!(shake256::domain_standard(), 0x1F);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_turboshake128_constants() {
         assert_eq!(turboshake128::BLOCKBYTES, 168);
         assert_eq!(turboshake128::STATEBYTES, 256);
@@ -959,7 +962,8 @@ mod tests {
         assert_eq!(turboshake128::domain_standard(), 0x1F);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_turboshake256_constants() {
         assert_eq!(turboshake256::BLOCKBYTES, 136);
         assert_eq!(turboshake256::STATEBYTES, 256);
@@ -970,7 +974,8 @@ mod tests {
         assert_eq!(turboshake256::domain_standard(), 0x1F);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_shake128_hash() {
         let message = b"Hello, World!";
         let hash = shake128::hash(message, 32).unwrap();
@@ -986,7 +991,8 @@ mod tests {
         assert_eq!(&hash_short[..], &hash_long[..16]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_shake256_hash() {
         let message = b"Hello, World!";
         let hash = shake256::hash(message, 64).unwrap();
@@ -997,7 +1003,8 @@ mod tests {
         assert_eq!(&hash_short[..], &hash[..32]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_turboshake128_hash() {
         let message = b"Hello, World!";
         let hash = turboshake128::hash(message, 32).unwrap();
@@ -1008,7 +1015,8 @@ mod tests {
         assert_ne!(hash, shake_hash);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_turboshake256_hash() {
         let message = b"Hello, World!";
         let hash = turboshake256::hash(message, 64).unwrap();
@@ -1019,7 +1027,8 @@ mod tests {
         assert_ne!(hash, shake_hash);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_shake128_incremental() {
         let message = b"Hello, World!";
 
@@ -1035,7 +1044,8 @@ mod tests {
         assert_eq!(hash1, hash2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_shake256_incremental() {
         let message = b"Hello, World!";
 
@@ -1048,7 +1058,8 @@ mod tests {
         assert_eq!(hash1, hash2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_turboshake128_incremental() {
         let message = b"Hello, World!";
 
@@ -1062,7 +1073,8 @@ mod tests {
         assert_eq!(hash1, hash2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_turboshake256_incremental() {
         let message = b"Hello, World!";
 
@@ -1075,7 +1087,8 @@ mod tests {
         assert_eq!(hash1, hash2);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_incremental_squeeze() {
         // Squeezing in parts should equal squeezing all at once
         let message = b"seed";
@@ -1096,7 +1109,8 @@ mod tests {
         assert_eq!(full, combined);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_domain_separation() {
         let message = b"same input";
 
@@ -1121,7 +1135,8 @@ mod tests {
         assert_ne!(hash2, hash3);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_invalid_domain() {
         // Domain 0 is invalid
         assert!(shake128::State::new_with_domain(0x00).is_err());
@@ -1140,7 +1155,8 @@ mod tests {
         assert!(turboshake128::State::new_with_domain(0x7F).is_ok());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_no_update_after_squeeze() {
         let mut state = turboshake128::State::new().unwrap();
         state.update(b"data").unwrap();
@@ -1150,7 +1166,8 @@ mod tests {
         assert!(state.update(b"more data").is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_squeeze_into() {
         let message = b"test";
         let mut state = turboshake128::State::new().unwrap();
@@ -1163,7 +1180,8 @@ mod tests {
         assert_eq!(&output[..], &expected[..]);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_variable_output_lengths() {
         let message = b"test";
 
@@ -1174,7 +1192,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_empty_input() {
         // Empty input should work
         let hash = turboshake128::hash(&[], 32).unwrap();

@@ -1689,7 +1689,8 @@ mod tests {
     use super::*;
     // Random is used in other test functions
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_keypair_generation() {
         let keypair = KeyPair::generate();
         let (pk, sk) = (keypair.public_key, keypair.secret_key);
@@ -1697,7 +1698,8 @@ mod tests {
         assert_eq!(sk.as_bytes().len(), SECRETKEYBYTES);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_seed_keypair() {
         // Generate a random seed
         let mut seed = [0u8; SECRETKEYBYTES];
@@ -1716,7 +1718,8 @@ mod tests {
         assert!(KeyPair::from_seed(&invalid_seed).is_err());
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_seal_open() {
         let alice_keypair = KeyPair::generate();
         let (alice_pk, alice_sk) = (alice_keypair.public_key, alice_keypair.secret_key);
@@ -1734,7 +1737,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_beforenm_afternm() {
         let alice_keypair = KeyPair::generate();
         let (alice_pk, alice_sk) = (alice_keypair.public_key, alice_keypair.secret_key);
@@ -1758,7 +1762,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_seal_detached_open_detached() {
         let alice_keypair = KeyPair::generate();
         let (alice_pk, alice_sk) = (alice_keypair.public_key, alice_keypair.secret_key);
@@ -1776,7 +1781,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_seal_detached_open_detached_afternm() {
         let alice_keypair = KeyPair::generate();
         let (alice_pk, alice_sk) = (alice_keypair.public_key, alice_keypair.secret_key);
@@ -1800,7 +1806,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_seal_box_open_sealed_box() {
         let bob_keypair = KeyPair::generate();
         let (bob_pk, bob_sk) = (bob_keypair.public_key, bob_keypair.secret_key);
@@ -1815,7 +1822,8 @@ mod tests {
         assert_eq!(decrypted, message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nacl_compatibility() {
         let alice_keypair = KeyPair::generate();
         let (alice_pk, alice_sk) = (alice_keypair.public_key, alice_keypair.secret_key);
@@ -1837,7 +1845,8 @@ mod tests {
         assert_eq!(decrypted_padded, padded_message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nacl_compatibility_afternm() {
         let alice_keypair = KeyPair::generate();
         let (alice_pk, alice_sk) = (alice_keypair.public_key, alice_keypair.secret_key);
@@ -1867,7 +1876,8 @@ mod tests {
         assert_eq!(decrypted_padded, padded_message);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_publickey_traits() {
         let keypair = KeyPair::generate();
         let pk = keypair.public_key;
@@ -1882,7 +1892,8 @@ mod tests {
         assert_eq!(extracted, bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_secretkey_traits() {
         let keypair = KeyPair::generate();
         let sk = keypair.secret_key;
@@ -1897,7 +1908,8 @@ mod tests {
         assert_eq!(extracted, bytes);
     }
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_precomputedkey_traits() {
         let alice_keypair = KeyPair::generate();
         let bob_keypair = KeyPair::generate();

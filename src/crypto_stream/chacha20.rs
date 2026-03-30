@@ -253,7 +253,8 @@ pub fn stream_xor(message: &[u8], nonce: &Nonce, key: &Key) -> Result<Vec<u8>> {
 mod tests {
     use super::*;
 
-    #[test]
+    #[cfg_attr(target_arch = "wasm32", wasm_bindgen_test::wasm_bindgen_test)]
+#[test]
     fn test_nonce_traits() {
         // Test TryFrom<&[u8]>
         let bytes = [0x42; NONCEBYTES];
