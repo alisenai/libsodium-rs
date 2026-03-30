@@ -1,11 +1,10 @@
 use crate::{Result, SodiumError};
 
 pub const BYTES_MIN: usize = libsodium_sys::crypto_pwhash_scryptsalsa208sha256_BYTES_MIN as usize;
-pub const BYTES_MAX: usize = if usize::BITS >= 37 {
-    0x001f_ffff_ffe0
-} else {
-    usize::MAX
-};
+#[cfg(target_pointer_width = "64")]
+pub const BYTES_MAX: usize = 0x1fffffffe0;
+#[cfg(target_pointer_width = "32")]
+pub const BYTES_MAX: usize = usize::MAX;
 pub const PASSWD_MIN: usize = libsodium_sys::crypto_pwhash_scryptsalsa208sha256_PASSWD_MIN as usize;
 pub const PASSWD_MAX: usize = usize::MAX;
 pub const SALTBYTES: usize = libsodium_sys::crypto_pwhash_scryptsalsa208sha256_SALTBYTES as usize;
@@ -26,11 +25,10 @@ pub const OPSLIMIT_MIN: u64 = libsodium_sys::crypto_pwhash_scryptsalsa208sha256_
 pub const OPSLIMIT_MAX: u64 = libsodium_sys::crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_MAX as u64;
 pub const MEMLIMIT_MIN: usize =
     libsodium_sys::crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_MIN as usize;
-pub const MEMLIMIT_MAX: usize = if usize::BITS >= 37 {
-    68_719_476_736
-} else {
-    usize::MAX
-};
+#[cfg(target_pointer_width = "64")]
+pub const MEMLIMIT_MAX: usize = 68_719_476_736;
+#[cfg(target_pointer_width = "32")]
+pub const MEMLIMIT_MAX: usize = usize::MAX;
 
 pub const OPSLIMIT_INTERACTIVE: u64 =
     libsodium_sys::crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_INTERACTIVE as u64;

@@ -3,11 +3,10 @@ use crate::{Result, SodiumError};
 pub const ALG: i32 = libsodium_sys::crypto_pwhash_argon2i_ALG_ARGON2I13 as i32;
 
 pub const BYTES_MIN: usize = libsodium_sys::crypto_pwhash_argon2i_BYTES_MIN as usize;
-pub const BYTES_MAX: usize = if usize::BITS >= 32 {
-    u32::MAX as usize
-} else {
-    usize::MAX
-};
+#[cfg(target_pointer_width = "64")]
+pub const BYTES_MAX: usize = 0x001f_ffff_ffe0;
+#[cfg(target_pointer_width = "32")]
+pub const BYTES_MAX: usize = usize::MAX;
 pub const PASSWD_MIN: usize = libsodium_sys::crypto_pwhash_argon2i_PASSWD_MIN as usize;
 pub const PASSWD_MAX: usize = libsodium_sys::crypto_pwhash_argon2i_PASSWD_MAX as usize;
 pub const SALTBYTES: usize = libsodium_sys::crypto_pwhash_argon2i_SALTBYTES as usize;
@@ -16,13 +15,10 @@ pub const STRBYTES: usize = libsodium_sys::crypto_pwhash_argon2i_STRBYTES as usi
 pub const OPSLIMIT_MIN: u64 = libsodium_sys::crypto_pwhash_argon2i_OPSLIMIT_MIN as u64;
 pub const OPSLIMIT_MAX: u64 = libsodium_sys::crypto_pwhash_argon2i_OPSLIMIT_MAX as u64;
 pub const MEMLIMIT_MIN: usize = libsodium_sys::crypto_pwhash_argon2i_MEMLIMIT_MIN as usize;
-pub const MEMLIMIT_MAX: usize = if usize::BITS >= 64 {
-    4_398_046_510_080
-} else if usize::BITS >= 32 {
-    2_147_483_648
-} else {
-    32_768
-};
+#[cfg(target_pointer_width = "64")]
+pub const MEMLIMIT_MAX: usize = 4_398_046_510_080;
+#[cfg(target_pointer_width = "32")]
+pub const MEMLIMIT_MAX: usize = usize::MAX;
 
 pub const OPSLIMIT_INTERACTIVE: u64 =
     libsodium_sys::crypto_pwhash_argon2i_OPSLIMIT_INTERACTIVE as u64;

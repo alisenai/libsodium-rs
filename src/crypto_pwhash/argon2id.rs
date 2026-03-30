@@ -43,12 +43,11 @@ pub const ALG: i32 = libsodium_sys::crypto_pwhash_argon2id_ALG_ARGON2ID13 as i32
 
 /// Minimum number of bytes in a derived key (16)
 pub const BYTES_MIN: usize = libsodium_sys::crypto_pwhash_argon2id_BYTES_MIN as usize;
-/// Maximum number of bytes in a derived key
-pub const BYTES_MAX: usize = if usize::BITS >= 32 {
-    u32::MAX as usize
-} else {
-    usize::MAX
-};
+/// Maximum number of bytes in a derived key.
+#[cfg(target_pointer_width = "64")]
+pub const BYTES_MAX: usize = 0x001f_ffff_ffe0;
+#[cfg(target_pointer_width = "32")]
+pub const BYTES_MAX: usize = usize::MAX;
 /// Minimum password length in bytes (0)
 pub const PASSWD_MIN: usize = libsodium_sys::crypto_pwhash_argon2id_PASSWD_MIN as usize;
 /// Maximum password length in bytes (4294967295, very large)
@@ -73,14 +72,11 @@ pub const OPSLIMIT_MAX: u64 = libsodium_sys::crypto_pwhash_argon2id_OPSLIMIT_MAX
 /// This is the absolute minimum memory usage. In practice, you should use
 /// much higher values for security.
 pub const MEMLIMIT_MIN: usize = libsodium_sys::crypto_pwhash_argon2id_MEMLIMIT_MIN as usize;
-/// Maximum memory limit parameter in bytes
-pub const MEMLIMIT_MAX: usize = if usize::BITS >= 64 {
-    4_398_046_510_080
-} else if usize::BITS >= 32 {
-    2_147_483_648
-} else {
-    32_768
-};
+/// Maximum memory limit parameter in bytes.
+#[cfg(target_pointer_width = "64")]
+pub const MEMLIMIT_MAX: usize = 4_398_046_510_080;
+#[cfg(target_pointer_width = "32")]
+pub const MEMLIMIT_MAX: usize = usize::MAX;
 
 /// Operations limit for interactive operations (2)
 ///
