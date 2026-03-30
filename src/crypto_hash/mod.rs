@@ -90,7 +90,7 @@ pub fn hash(data: &[u8]) -> [u8; SHA512_BYTES] {
         libsodium_sys::crypto_hash(
             out.as_mut_ptr(),
             data.as_ptr(),
-            data.len() as libc::c_ulonglong,
+            data.len() as crate::ffi::c_ulonglong,
         );
     }
     out

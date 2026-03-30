@@ -204,8 +204,8 @@ impl State {
                 libsodium_sys::crypto_generichash_blake2b_init(
                     &mut state.state,
                     key.as_ptr(),
-                    key.len() as libc::size_t,
-                    output_len as libc::size_t,
+                    key.len() as crate::ffi::size_t,
+                    output_len as crate::ffi::size_t,
                 )
             },
             None => unsafe {
@@ -213,7 +213,7 @@ impl State {
                     &mut state.state,
                     std::ptr::null(),
                     0,
-                    output_len as libc::size_t,
+                    output_len as crate::ffi::size_t,
                 )
             },
         };
@@ -372,8 +372,8 @@ impl State {
             libsodium_sys::crypto_generichash_blake2b_init_salt_personal(
                 &mut state.state,
                 key.map_or(std::ptr::null(), |k| k.as_ptr()),
-                key.map_or(0, |k| k.len() as libc::size_t),
-                output_len as libc::size_t,
+                key.map_or(0, |k| k.len() as crate::ffi::size_t),
+                output_len as crate::ffi::size_t,
                 salt.map_or(std::ptr::null(), |s| s.as_ptr()),
                 personal.map_or(std::ptr::null(), |p| p.as_ptr()),
             )
@@ -465,7 +465,7 @@ impl State {
             libsodium_sys::crypto_generichash_blake2b_update(
                 &mut self.state,
                 input.as_ptr(),
-                input.len() as libc::c_ulonglong,
+                input.len() as crate::ffi::c_ulonglong,
             )
         };
 
@@ -542,7 +542,7 @@ impl State {
             libsodium_sys::crypto_generichash_blake2b_final(
                 &mut self.state,
                 out.as_mut_ptr(),
-                out.len() as libc::size_t,
+                out.len() as crate::ffi::size_t,
             )
         };
 

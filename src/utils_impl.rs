@@ -223,8 +223,8 @@ pub fn stackzero(len: usize) {
 pub fn mlock(buf: &mut [u8]) -> std::io::Result<()> {
     let result = unsafe {
         libsodium_sys::sodium_mlock(
-            buf.as_mut_ptr() as *mut libc::c_void,
-            buf.len() as libc::size_t,
+            buf.as_mut_ptr() as *mut crate::ffi::c_void,
+            buf.len() as crate::ffi::size_t,
         )
     };
 
@@ -258,8 +258,8 @@ pub fn mlock(buf: &mut [u8]) -> std::io::Result<()> {
 pub fn munlock(buf: &mut [u8]) -> std::io::Result<()> {
     let result = unsafe {
         libsodium_sys::sodium_munlock(
-            buf.as_mut_ptr() as *mut libc::c_void,
-            buf.len() as libc::size_t,
+            buf.as_mut_ptr() as *mut crate::ffi::c_void,
+            buf.len() as crate::ffi::size_t,
         )
     };
 
@@ -717,8 +717,8 @@ pub fn hex2bin_ignore(hex: &str, ignore: &str) -> Result<Vec<u8>> {
 /// * `size` - The number of bytes to allocate
 ///
 /// # Returns
-/// * `*mut libc::c_void` - A pointer to the allocated memory, or null if allocation failed
-pub fn malloc(size: usize) -> *mut libc::c_void {
+/// * `*mut crate::ffi::c_void` - A pointer to the allocated memory, or null if allocation failed
+pub fn malloc(size: usize) -> *mut crate::ffi::c_void {
     unsafe { libsodium_sys::sodium_malloc(size) }
 }
 
@@ -732,8 +732,8 @@ pub fn malloc(size: usize) -> *mut libc::c_void {
 /// * `size` - The size of each element
 ///
 /// ## Returns
-/// * `*mut libc::c_void` - A pointer to the allocated memory, or null if allocation failed
-pub fn allocarray(count: usize, size: usize) -> *mut libc::c_void {
+/// * `*mut crate::ffi::c_void` - A pointer to the allocated memory, or null if allocation failed
+pub fn allocarray(count: usize, size: usize) -> *mut crate::ffi::c_void {
     unsafe { libsodium_sys::sodium_allocarray(count, size) }
 }
 
@@ -748,7 +748,7 @@ pub fn allocarray(count: usize, size: usize) -> *mut libc::c_void {
 ///
 /// ## Arguments
 /// * `ptr` - A pointer to the memory to free
-pub unsafe fn free(ptr: *mut libc::c_void) {
+pub unsafe fn free(ptr: *mut crate::ffi::c_void) {
     unsafe { libsodium_sys::sodium_free(ptr) }
 }
 
@@ -767,7 +767,7 @@ pub unsafe fn free(ptr: *mut libc::c_void) {
 ///
 /// ## Returns
 /// * `i32` - 0 on success, -1 on failure
-pub unsafe fn mprotect_noaccess(ptr: *mut libc::c_void) -> i32 {
+pub unsafe fn mprotect_noaccess(ptr: *mut crate::ffi::c_void) -> i32 {
     unsafe { libsodium_sys::sodium_mprotect_noaccess(ptr) }
 }
 
@@ -785,7 +785,7 @@ pub unsafe fn mprotect_noaccess(ptr: *mut libc::c_void) -> i32 {
 ///
 /// ## Returns
 /// * `i32` - 0 on success, -1 on failure
-pub unsafe fn mprotect_readonly(ptr: *mut libc::c_void) -> i32 {
+pub unsafe fn mprotect_readonly(ptr: *mut crate::ffi::c_void) -> i32 {
     unsafe { libsodium_sys::sodium_mprotect_readonly(ptr) }
 }
 
@@ -803,7 +803,7 @@ pub unsafe fn mprotect_readonly(ptr: *mut libc::c_void) -> i32 {
 ///
 /// ## Returns
 /// * `i32` - 0 on success, -1 on failure
-pub unsafe fn mprotect_readwrite(ptr: *mut libc::c_void) -> i32 {
+pub unsafe fn mprotect_readwrite(ptr: *mut crate::ffi::c_void) -> i32 {
     unsafe { libsodium_sys::sodium_mprotect_readwrite(ptr) }
 }
 

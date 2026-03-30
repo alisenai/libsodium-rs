@@ -90,7 +90,6 @@
 //!   is required, consider using additional key exchange protocols.
 
 use crate::{Result, SodiumError};
-use libc;
 
 /// Minimum number of bytes in a derived subkey (16)
 ///
@@ -385,9 +384,9 @@ pub fn derive_from_key(
     let result = unsafe {
         libsodium_sys::crypto_kdf_derive_from_key(
             subkey.as_mut_ptr(),
-            subkey_len as libc::size_t,
+            subkey_len as crate::ffi::size_t,
             subkey_id,
-            context.as_ptr() as *const libc::c_char,
+            context.as_ptr() as *const crate::ffi::c_char,
             master_key.as_bytes().as_ptr(),
         )
     };
@@ -620,9 +619,9 @@ pub mod blake2b {
         let result = unsafe {
             libsodium_sys::crypto_kdf_blake2b_derive_from_key(
                 subkey.as_mut_ptr(),
-                subkey_len as libc::size_t,
-                subkey_id as libc::c_ulonglong,
-                context.as_ptr() as *const libc::c_char,
+                subkey_len as crate::ffi::size_t,
+                subkey_id as crate::ffi::c_ulonglong,
+                context.as_ptr() as *const crate::ffi::c_char,
                 master_key.as_bytes().as_ptr(),
             )
         };
@@ -812,9 +811,9 @@ pub mod hkdf {
                 libsodium_sys::crypto_kdf_hkdf_sha256_extract(
                     prk.as_mut_ptr(),
                     salt_ptr,
-                    salt_len as libc::size_t,
+                    salt_len as crate::ffi::size_t,
                     ikm.as_ptr(),
-                    ikm.len() as libc::size_t,
+                    ikm.len() as crate::ffi::size_t,
                 )
             };
 
@@ -872,7 +871,7 @@ pub mod hkdf {
             let mut out = vec![0u8; out_len];
 
             let ctx_ptr = match ctx {
-                Some(c) => c.as_ptr() as *const libc::c_char,
+                Some(c) => c.as_ptr() as *const crate::ffi::c_char,
                 None => std::ptr::null(),
             };
             let ctx_len = ctx.map_or(0, |c| c.len());
@@ -880,9 +879,9 @@ pub mod hkdf {
             let result = unsafe {
                 libsodium_sys::crypto_kdf_hkdf_sha256_expand(
                     out.as_mut_ptr(),
-                    out_len as libc::size_t,
+                    out_len as crate::ffi::size_t,
                     ctx_ptr,
-                    ctx_len as libc::size_t,
+                    ctx_len as crate::ffi::size_t,
                     prk.as_bytes().as_ptr(),
                 )
             };
@@ -940,7 +939,7 @@ pub mod hkdf {
                     libsodium_sys::crypto_kdf_hkdf_sha256_extract_init(
                         self.state.as_mut(),
                         salt_ptr,
-                        salt_len as libc::size_t,
+                        salt_len as crate::ffi::size_t,
                     )
                 };
 
@@ -967,7 +966,7 @@ pub mod hkdf {
                     libsodium_sys::crypto_kdf_hkdf_sha256_extract_update(
                         self.state.as_mut(),
                         ikm.as_ptr(),
-                        ikm.len() as libc::size_t,
+                        ikm.len() as crate::ffi::size_t,
                     )
                 };
 
@@ -1175,9 +1174,9 @@ pub mod hkdf {
                 libsodium_sys::crypto_kdf_hkdf_sha512_extract(
                     prk.as_mut_ptr(),
                     salt_ptr,
-                    salt_len as libc::size_t,
+                    salt_len as crate::ffi::size_t,
                     ikm.as_ptr(),
-                    ikm.len() as libc::size_t,
+                    ikm.len() as crate::ffi::size_t,
                 )
             };
 
@@ -1232,7 +1231,7 @@ pub mod hkdf {
             let mut out = vec![0u8; out_len];
 
             let ctx_ptr = match ctx {
-                Some(c) => c.as_ptr() as *const libc::c_char,
+                Some(c) => c.as_ptr() as *const crate::ffi::c_char,
                 None => std::ptr::null(),
             };
             let ctx_len = ctx.map_or(0, |c| c.len());
@@ -1240,9 +1239,9 @@ pub mod hkdf {
             let result = unsafe {
                 libsodium_sys::crypto_kdf_hkdf_sha512_expand(
                     out.as_mut_ptr(),
-                    out_len as libc::size_t,
+                    out_len as crate::ffi::size_t,
                     ctx_ptr,
-                    ctx_len as libc::size_t,
+                    ctx_len as crate::ffi::size_t,
                     prk.as_bytes().as_ptr(),
                 )
             };
@@ -1300,7 +1299,7 @@ pub mod hkdf {
                     libsodium_sys::crypto_kdf_hkdf_sha512_extract_init(
                         self.state.as_mut(),
                         salt_ptr,
-                        salt_len as libc::size_t,
+                        salt_len as crate::ffi::size_t,
                     )
                 };
 
@@ -1327,7 +1326,7 @@ pub mod hkdf {
                     libsodium_sys::crypto_kdf_hkdf_sha512_extract_update(
                         self.state.as_mut(),
                         ikm.as_ptr(),
-                        ikm.len() as libc::size_t,
+                        ikm.len() as crate::ffi::size_t,
                     )
                 };
 

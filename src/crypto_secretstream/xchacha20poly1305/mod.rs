@@ -51,7 +51,6 @@
 //! ```
 
 use crate::{Result, SodiumError};
-use libc;
 use std::convert::TryFrom;
 
 /// Number of bytes in a key (32 bytes)
@@ -210,7 +209,7 @@ impl Drop for State {
         unsafe {
             // Use sodium_memzero to clear the state
             libsodium_sys::sodium_memzero(
-                self.state.as_mut() as *mut _ as *mut libc::c_void,
+                self.state.as_mut() as *mut _ as *mut crate::ffi::c_void,
                 std::mem::size_of::<libsodium_sys::crypto_secretstream_xchacha20poly1305_state>(),
             );
         }
@@ -429,7 +428,7 @@ impl PushState {
     pub fn push(&mut self, m: &[u8], ad: Option<&[u8]>, tag: u8) -> Result<Vec<u8>> {
         let c_len = m.len() + ABYTES;
         let mut c = vec![0u8; c_len];
-        let mut c_len: libc::c_ulonglong = 0;
+        let mut c_len: crate::ffi::c_ulonglong = 0;
 
         unsafe {
             let result = libsodium_sys::crypto_secretstream_xchacha20poly1305_push(
@@ -437,9 +436,9 @@ impl PushState {
                 c.as_mut_ptr(),
                 &mut c_len,
                 m.as_ptr(),
-                m.len() as libc::c_ulonglong,
+                m.len() as crate::ffi::c_ulonglong,
                 ad.map_or(std::ptr::null(), |ad| ad.as_ptr()),
-                ad.map_or(0, |ad| ad.len()) as libc::c_ulonglong,
+                ad.map_or(0, |ad| ad.len()) as crate::ffi::c_ulonglong,
                 tag,
             );
 
@@ -787,7 +786,7 @@ impl PullState {
 
         let m_len = c.len() - ABYTES;
         let mut m = vec![0u8; m_len];
-        let mut m_len_out: libc::c_ulonglong = 0;
+        let mut m_len_out: crate::ffi::c_ulonglong = 0;
         let mut tag: u8 = 0;
 
         unsafe {
@@ -797,9 +796,9 @@ impl PullState {
                 &mut m_len_out,
                 &mut tag,
                 c.as_ptr(),
-                c.len() as libc::c_ulonglong,
+                c.len() as crate::ffi::c_ulonglong,
                 ad.map_or(std::ptr::null(), |ad| ad.as_ptr()),
-                ad.map_or(0, |ad| ad.len()) as libc::c_ulonglong,
+                ad.map_or(0, |ad| ad.len()) as crate::ffi::c_ulonglong,
             );
 
             if result != 0 {

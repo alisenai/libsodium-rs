@@ -37,7 +37,6 @@
 //! - **Sensitive**: For highly sensitive operations with ~5 second computation time
 
 use crate::{Result, SodiumError};
-use libc;
 
 /// The Argon2id algorithm version 1.3
 pub const ALG: i32 = libsodium_sys::crypto_pwhash_argon2id_ALG_ARGON2ID13 as i32;
@@ -184,12 +183,12 @@ pub fn pwhash(
     let result = unsafe {
         libsodium_sys::crypto_pwhash_argon2id(
             output.as_mut_ptr(),
-            out_len as libc::c_ulonglong,
-            password.as_ptr() as *const libc::c_char,
-            password.len() as libc::c_ulonglong,
+            out_len as crate::ffi::c_ulonglong,
+            password.as_ptr() as *const crate::ffi::c_char,
+            password.len() as crate::ffi::c_ulonglong,
             salt.as_ptr(),
-            opslimit as libc::c_ulonglong,
-            memlimit as libc::size_t,
+            opslimit as crate::ffi::c_ulonglong,
+            memlimit as crate::ffi::size_t,
             ALG,
         )
     };
@@ -250,11 +249,11 @@ pub fn pwhash_str(password: &[u8], opslimit: u64, memlimit: usize) -> Result<Str
     let mut output = vec![0u8; STRBYTES];
     let result = unsafe {
         libsodium_sys::crypto_pwhash_argon2id_str(
-            output.as_mut_ptr() as *mut libc::c_char,
-            password.as_ptr() as *const libc::c_char,
-            password.len() as libc::c_ulonglong,
-            opslimit as libc::c_ulonglong,
-            memlimit as libc::size_t,
+            output.as_mut_ptr() as *mut crate::ffi::c_char,
+            password.as_ptr() as *const crate::ffi::c_char,
+            password.len() as crate::ffi::c_ulonglong,
+            opslimit as crate::ffi::c_ulonglong,
+            memlimit as crate::ffi::size_t,
         )
     };
 
@@ -351,9 +350,9 @@ pub fn pwhash_str_verify(hash_str: &str, password: &[u8]) -> bool {
 
     let result = unsafe {
         libsodium_sys::crypto_pwhash_argon2id_str_verify(
-            hash_str.as_ptr() as *const libc::c_char,
-            password.as_ptr() as *const libc::c_char,
-            password.len() as libc::c_ulonglong,
+            hash_str.as_ptr() as *const crate::ffi::c_char,
+            password.as_ptr() as *const crate::ffi::c_char,
+            password.len() as crate::ffi::c_ulonglong,
         )
     };
 
@@ -438,9 +437,9 @@ pub fn pwhash_str_verify(hash_str: &str, password: &[u8]) -> bool {
 pub fn pwhash_str_needs_rehash(hash_str: &str, opslimit: u64, memlimit: usize) -> Option<bool> {
     let result = unsafe {
         libsodium_sys::crypto_pwhash_argon2id_str_needs_rehash(
-            hash_str.as_ptr() as *const libc::c_char,
-            opslimit as libc::c_ulonglong,
-            memlimit as libc::size_t,
+            hash_str.as_ptr() as *const crate::ffi::c_char,
+            opslimit as crate::ffi::c_ulonglong,
+            memlimit as crate::ffi::size_t,
         )
     };
 
@@ -458,9 +457,15 @@ mod tests {
 
     #[test]
     fn test_max_constants_match_libsodium() {
-        assert_eq!(BYTES_MAX, unsafe { libsodium_sys::crypto_pwhash_argon2id_bytes_max() });
-        assert_eq!(PASSWD_MAX, unsafe { libsodium_sys::crypto_pwhash_argon2id_passwd_max() });
-        assert_eq!(MEMLIMIT_MAX, unsafe { libsodium_sys::crypto_pwhash_argon2id_memlimit_max() });
+        assert_eq!(BYTES_MAX, unsafe {
+            libsodium_sys::crypto_pwhash_argon2id_bytes_max()
+        });
+        assert_eq!(PASSWD_MAX, unsafe {
+            libsodium_sys::crypto_pwhash_argon2id_passwd_max()
+        });
+        assert_eq!(MEMLIMIT_MAX, unsafe {
+            libsodium_sys::crypto_pwhash_argon2id_memlimit_max()
+        });
     }
 
     #[test]

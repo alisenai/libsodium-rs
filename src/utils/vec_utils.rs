@@ -593,7 +593,7 @@ impl<T: Default + Clone> SecureVec<T> {
 
         // Free the old memory
         unsafe {
-            super::free(self.ptr as *mut libc::c_void);
+            super::free(self.ptr as *mut crate::ffi::c_void);
         }
 
         self.ptr = new_ptr;
@@ -628,7 +628,7 @@ impl<T: Default + Clone> Drop for SecureVec<T> {
 
         // Free the memory
         unsafe {
-            super::free(self.ptr as *mut libc::c_void);
+            super::free(self.ptr as *mut crate::ffi::c_void);
         }
     }
 }

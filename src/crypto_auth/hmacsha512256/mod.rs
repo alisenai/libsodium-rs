@@ -44,7 +44,6 @@
 //! ```
 
 use crate::{Result, SodiumError};
-use libc;
 
 /// Number of bytes in a key
 pub const KEYBYTES: usize = libsodium_sys::crypto_auth_hmacsha512256_KEYBYTES as usize;
@@ -124,7 +123,7 @@ impl State {
             libsodium_sys::crypto_auth_hmacsha512256_init(
                 state.as_mut(),
                 key.as_bytes().as_ptr(),
-                key.as_bytes().len() as libc::size_t,
+                key.as_bytes().len() as crate::ffi::size_t,
             )
         };
 
@@ -143,7 +142,7 @@ impl State {
             libsodium_sys::crypto_auth_hmacsha512256_update(
                 self.state.as_mut(),
                 input.as_ptr(),
-                input.len() as libc::c_ulonglong,
+                input.len() as crate::ffi::c_ulonglong,
             )
         };
 
@@ -179,7 +178,7 @@ pub fn auth(input: &[u8], key: &Key) -> Result<[u8; BYTES]> {
         libsodium_sys::crypto_auth_hmacsha512256(
             mac.as_mut_ptr(),
             input.as_ptr(),
-            input.len() as libc::c_ulonglong,
+            input.len() as crate::ffi::c_ulonglong,
             key.as_bytes().as_ptr(),
         )
     };
@@ -197,7 +196,7 @@ pub fn verify(mac: &[u8; BYTES], input: &[u8], key: &Key) -> Result<()> {
         libsodium_sys::crypto_auth_hmacsha512256_verify(
             mac.as_ptr(),
             input.as_ptr(),
-            input.len() as libc::c_ulonglong,
+            input.len() as crate::ffi::c_ulonglong,
             key.as_bytes().as_ptr(),
         )
     };

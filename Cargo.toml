@@ -20,7 +20,9 @@ include = [
 rust-version = "1.60.0"
 
 [dependencies]
-libsodium-sys-stable = "1.23.0"
+libsodium-sys-stable = { path = "../libsodium-sys-stable-wasm32" }
+# libsodium-sys-stable = { git = "ssh://git@github.com/lockcmpxchg8beax/libsodium-sys-stable-wasm32.git" }
+# libsodium-sys-stable = "1.23.0"
 thiserror = "1.0"
 ctor = "0.6"
 libc = "0.2"
@@ -45,3 +47,4 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dev-dependencies]
 benchmark-simple = "0.1.10"
+wasm-bindgen-test = "0.3"

@@ -129,7 +129,7 @@ impl Drop for State {
         unsafe {
             // Use sodium_memzero to clear the state
             libsodium_sys::sodium_memzero(
-                &mut self.state as *mut _ as *mut libc::c_void,
+                &mut self.state as *mut _ as *mut crate::ffi::c_void,
                 std::mem::size_of::<libsodium_sys::crypto_generichash_state>(),
             );
         }
@@ -215,8 +215,8 @@ impl State {
                 libsodium_sys::crypto_generichash_init(
                     &mut state.state,
                     key.as_ptr(),
-                    key.len() as libc::size_t,
-                    output_len as libc::size_t,
+                    key.len() as crate::ffi::size_t,
+                    output_len as crate::ffi::size_t,
                 )
             },
             None => unsafe {
@@ -224,7 +224,7 @@ impl State {
                     &mut state.state,
                     std::ptr::null(),
                     0,
-                    output_len as libc::size_t,
+                    output_len as crate::ffi::size_t,
                 )
             },
         };
@@ -272,7 +272,7 @@ impl State {
             libsodium_sys::crypto_generichash_update(
                 &mut self.state,
                 input.as_ptr(),
-                input.len() as libc::c_ulonglong,
+                input.len() as crate::ffi::c_ulonglong,
             );
         }
     }
@@ -315,7 +315,7 @@ impl State {
             libsodium_sys::crypto_generichash_final(
                 &mut self.state,
                 out.as_mut_ptr(),
-                out.len() as libc::size_t,
+                out.len() as crate::ffi::size_t,
             );
         }
 

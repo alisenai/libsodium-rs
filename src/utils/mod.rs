@@ -702,8 +702,8 @@ pub fn base642bin(b64: &str, variant: i32) -> Result<Vec<u8>> {
 /// * `size` - The number of bytes to allocate
 ///
 /// # Returns
-/// * `*mut libc::c_void` - A pointer to the allocated memory, or null if allocation failed
-pub fn malloc(size: usize) -> *mut libc::c_void {
+/// * `*mut crate::ffi::c_void` - A pointer to the allocated memory, or null if allocation failed
+pub fn malloc(size: usize) -> *mut crate::ffi::c_void {
     unsafe { libsodium_sys::sodium_malloc(size) }
 }
 
@@ -722,8 +722,8 @@ pub fn malloc(size: usize) -> *mut libc::c_void {
 /// * `size` - The size of each element
 ///
 /// ## Returns
-/// * `*mut libc::c_void` - A pointer to the allocated memory, or null if allocation failed
-pub fn allocarray(count: usize, size: usize) -> *mut libc::c_void {
+/// * `*mut crate::ffi::c_void` - A pointer to the allocated memory, or null if allocation failed
+pub fn allocarray(count: usize, size: usize) -> *mut crate::ffi::c_void {
     unsafe { libsodium_sys::sodium_allocarray(count, size) }
 }
 
@@ -738,7 +738,7 @@ pub fn allocarray(count: usize, size: usize) -> *mut libc::c_void {
 ///
 /// ## Arguments
 /// * `ptr` - A pointer to the memory to free
-pub unsafe fn free(ptr: *mut libc::c_void) {
+pub unsafe fn free(ptr: *mut crate::ffi::c_void) {
     unsafe { libsodium_sys::sodium_free(ptr) }
 }
 
@@ -756,7 +756,7 @@ pub unsafe fn free(ptr: *mut libc::c_void) {
 ///
 /// ## Returns
 /// * `i32` - 0 on success, -1 on failure
-pub unsafe fn mprotect_noaccess(ptr: *mut libc::c_void) -> i32 {
+pub unsafe fn mprotect_noaccess(ptr: *mut crate::ffi::c_void) -> i32 {
     unsafe { libsodium_sys::sodium_mprotect_noaccess(ptr) }
 }
 
@@ -774,7 +774,7 @@ pub unsafe fn mprotect_noaccess(ptr: *mut libc::c_void) -> i32 {
 ///
 /// ## Returns
 /// * `i32` - 0 on success, -1 on failure
-pub unsafe fn mprotect_readonly(ptr: *mut libc::c_void) -> i32 {
+pub unsafe fn mprotect_readonly(ptr: *mut crate::ffi::c_void) -> i32 {
     unsafe { libsodium_sys::sodium_mprotect_readonly(ptr) }
 }
 
@@ -792,7 +792,7 @@ pub unsafe fn mprotect_readonly(ptr: *mut libc::c_void) -> i32 {
 ///
 /// ## Returns
 /// * `i32` - 0 on success, -1 on failure
-pub unsafe fn mprotect_readwrite(ptr: *mut libc::c_void) -> i32 {
+pub unsafe fn mprotect_readwrite(ptr: *mut crate::ffi::c_void) -> i32 {
     unsafe { libsodium_sys::sodium_mprotect_readwrite(ptr) }
 }
 

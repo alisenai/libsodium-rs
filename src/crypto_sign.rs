@@ -187,7 +187,7 @@
 //! - **This implementation** uses constant-time operations to prevent timing attacks.
 
 use crate::{Result, SodiumError};
-use libc::c_ulonglong;
+use crate::ffi::c_ulonglong;
 use std::convert::TryFrom;
 use std::fmt;
 
@@ -728,7 +728,7 @@ pub fn sign(message: &[u8], secret_key: &SecretKey) -> Result<Vec<u8>> {
             signed_message.as_mut_ptr(),
             &mut signed_len,
             message.as_ptr(),
-            message.len() as libc::c_ulonglong,
+            message.len() as crate::ffi::c_ulonglong,
             secret_key.as_bytes().as_ptr(),
         )
     };
@@ -813,7 +813,7 @@ pub fn verify(signed_message: &[u8], public_key: &PublicKey) -> Option<Vec<u8>> 
             message.as_mut_ptr(),
             &mut message_len,
             signed_message.as_ptr(),
-            signed_message.len() as libc::c_ulonglong,
+            signed_message.len() as crate::ffi::c_ulonglong,
             public_key.as_bytes().as_ptr(),
         )
     };
@@ -910,7 +910,7 @@ pub fn sign_detached(message: &[u8], secret_key: &SecretKey) -> Result<[u8; BYTE
             signature.as_mut_ptr(),
             &mut signature_len,
             message.as_ptr(),
-            message.len() as libc::c_ulonglong,
+            message.len() as crate::ffi::c_ulonglong,
             secret_key.as_bytes().as_ptr(),
         )
     };
@@ -997,7 +997,7 @@ pub fn verify_detached(signature: &[u8; BYTES], message: &[u8], public_key: &Pub
         libsodium_sys::crypto_sign_verify_detached(
             signature.as_ptr(),
             message.as_ptr(),
-            message.len() as libc::c_ulonglong,
+            message.len() as crate::ffi::c_ulonglong,
             public_key.as_bytes().as_ptr(),
         )
     };

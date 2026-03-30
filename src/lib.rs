@@ -132,6 +132,7 @@ pub mod crypto_sign;
 pub mod crypto_stream;
 pub mod crypto_verify;
 pub mod crypto_xof;
+pub(crate) mod ffi;
 pub mod random;
 pub mod utils;
 pub mod version;
